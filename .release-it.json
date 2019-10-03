@@ -1,0 +1,10 @@
+{
+    "github": {
+        "release": true,
+        "preRelease": false,
+        "releaseNotes": "echo https://github.com/frida/frida/releases",
+        "assets": [
+            "build/*.zip"
+        ]
+    }
+}

@@ -1,0 +1,21 @@
+language: minimal
+
+stages:
+  - name: cron
+    if: type = cron
+
+before_script:
+  - set -e
+
+jobs:
+  include:
+    - stage: cron
+      script:
+        # trigger DroneCI
+        - >
+          STATUS=$(curl --write-out %{http_code} --silent --output /dev/null
+          -X POST -H "Authorization: Bearer $DRONE_TOKEN" "https://cloud.drone.io/api/repos/$TRAVIS_REPO_SLUG/builds")
+        - >
+          echo "Result: $STATUS"
+        - >
+          [ "$STATUS" == "200" ] || exit 1
