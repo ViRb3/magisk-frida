@@ -27,8 +27,8 @@ Check out the [troubleshooting guide](TROUBLESHOOTING.md)
 ## Building yourself
 
 ```bash
-pipenv sync
-pipenv run python build.py
+poetry install
+poetry run python build.py
 ```
 
 - Release ZIPs will be under `/releases`
