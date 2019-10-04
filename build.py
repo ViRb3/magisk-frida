@@ -56,7 +56,7 @@ version={project_tag}
 versionCode={project_tag.replace(".", "").replace("-", "")}
 author=ViRb3
 description=Run frida-server on boot
-support=https://github.com/ViRb3/MagiskFrida/issues
+support=https://github.com/ViRb3/magisk-frida/issues
 minMagisk=1530"""
 
     with open(path.joinpath( "module.prop"), "w", newline="\n") as f:
