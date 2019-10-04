@@ -36,7 +36,7 @@ steps:
   commands:
     - >
       [ -f NEW_TAG.txt ] || exit 0
-    - apk add --no-cache npm git openssh-client python3 unzip
+    - apk add --no-cache npm git openssh-client unzip
 
     - git config --global user.email "drone@drone.io"
     - git config --global user.name "DroneCI"
