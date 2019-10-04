@@ -15,7 +15,7 @@
   OR
 - Flash it in recovery (e.g. [TWRP](https://twrp.me/))
 
-## How fast are updates?
+## How fast are frida-server updates?
 In less than 24 hours! They're automatic, too
 
 ## Why pre-releases?
