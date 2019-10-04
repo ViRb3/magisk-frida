@@ -7,7 +7,7 @@ platform:
 
 steps:
 - name: get_tags
-  image: alpine/git
+  image: alpine/git:1.0.7
   commands:
   - git fetch --tags
 
