@@ -12,12 +12,12 @@ steps:
   - git fetch --tags
 
 - name: build
-  image: alpine:3.10
+  image: python:3.7.4-alpine3.10
   commands:
-  - ls -al
-  - apk add --no-cache python3 git
-  - pip3 install pipenv
-  - pipenv install --system --deploy --ignore-pipfile
+  - apk add --no-cache git
+  - pip3 install poetry
+  - poetry config settings.virtualenvs.create false
+  - poetry install
   - python3 main.py
 
 - name: publish
