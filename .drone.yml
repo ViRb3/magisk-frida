@@ -31,7 +31,7 @@ steps:
       from_secret: ssh_key_module
     SSH_KNOWN_HOSTS:
       from_secret: ssh_known_hosts
-    MODULE_REPO: git@github.com:ViRb3/magisk-frida-module.git
+    MODULE_REPO: git@github.com:Magisk-Modules-Repo/magisk-frida.git
     MODULE_NAME: magisk-frida-module
   commands:
     - >
