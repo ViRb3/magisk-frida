@@ -10,10 +10,7 @@
 - `arm64`, `arm`, `x86`, `x86_64`
 
 ## Instructions
-- Grab the latest ZIP from the [release page](https://github.com/ViRb3/magisk-frida/releases)
-- Install it using [Magisk Manager](https://github.com/topjohnwu/Magisk)  
-  OR
-- Flash it in recovery (e.g. [TWRP](https://twrp.me/))
+- Install `MagiskFrida` from [Magisk Manager](https://github.com/topjohnwu/Magisk)
 
 ## How fast are frida-server updates?
 In less than 24 hours! They're automatic, too
