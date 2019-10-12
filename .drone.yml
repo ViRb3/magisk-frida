@@ -56,7 +56,7 @@ steps:
     - ssh-add -D
     - echo "$SSH_KEY_MODULE" | tr -d '\r' | ssh-add -
 
-    - git clone $MODULE_REPO
+    - git clone $MODULE_REPO $MODULE_NAME
     - cd $MODULE_NAME
     - find . ! -name ".git" -maxdepth 1 -exec rm -rf {} + || true
     - unzip -o "../build/*.zip" -d "."
