@@ -1,3 +1,4 @@
+import re
 import requests
 import subprocess
 import string
@@ -37,10 +38,18 @@ def get_last_commit_tag() -> str:
     return last_tag
 
 
+# properly sort tags (e.g. 1.11 > 1.9)
+def sort_tags(tags: [str]) -> [str]:
+    tags = tags.copy()
+    s: str
+    tags.sort(key=lambda s: list(map(int, re.split(r"[\.-]", s))))
+    return tags
+
+
 # gets last tag from filter
 def get_last_tag(filter_args: [str]) -> str:
     tags = exec_git_command(["tag", "-l"] + filter_args).splitlines()
-    last_tag = "" if len(tags) < 1 else [tag for tag in tags if tag[0] in string.digits][-1]
+    last_tag = "" if len(tags) < 1 else sort_tags(tags)[-1]
     return last_tag
 
 
