@@ -63,3 +63,8 @@ steps:
     - git add -A
     - git commit -m "$NEW_TAG"
     - git push
+
+trigger:
+  event:
+    exclude:
+    - tag
