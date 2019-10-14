@@ -40,7 +40,7 @@ steps:
 
     - git config --global user.email "drone@drone.io"
     - git config --global user.name "DroneCI"
-    - git branch --set-upstream-to=origin/$DRONE_BRANCH
+    - git branch --set-upstream-to=origin/master
     - git remote set-url origin $DRONE_GIT_SSH_URL
 
     - eval $(ssh-agent -s)
