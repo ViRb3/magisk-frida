@@ -28,5 +28,5 @@ poetry install
 poetry run python build.py
 ```
 
-- Release ZIPs will be under `/releases`
+- Release ZIP will be under `/build`
 - frida-server downloads will be under `/downloads`
