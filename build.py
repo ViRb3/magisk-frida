@@ -22,6 +22,7 @@ syslog.setFormatter(formatter)
 logger.setLevel(logging.INFO)
 logger.addHandler(syslog)
 
+
 def download_file(url: str, path: Path):
     file_name = url[url.rfind("/") + 1:]
     logger.info(f"Downloading '{file_name}' to '{path}'")
@@ -59,7 +60,7 @@ description=Run frida-server on boot
 support=https://github.com/ViRb3/magisk-frida/issues
 minMagisk=1530"""
 
-    with open(path.joinpath( "module.prop"), "w", newline="\n") as f:
+    with open(path.joinpath("module.prop"), "w", newline="\n") as f:
         f.write(module_prop)
 
 
@@ -97,7 +98,7 @@ def package_module(project_tag: str):
                 if file_name == "placeholder" or file_name == ".gitkeep":
                     continue
                 zf.write(Path(root).joinpath(file_name),
-                    arcname=Path(root).relative_to(PATH_BUILD_TMP).joinpath(file_name))
+                         arcname=Path(root).relative_to(PATH_BUILD_TMP).joinpath(file_name))
 
     shutil.rmtree(PATH_BUILD_TMP)
 
@@ -111,10 +112,11 @@ def do_build(frida_tag: str, project_tag: str):
     archs = ["arm", "arm64", "x86", "x86_64"]
     threads = []
     for arch in archs:
-        thread = Thread(target=lambda: fill_module(arch, frida_tag, project_tag), name="build-"+arch)
+        thread = Thread(target=lambda: fill_module(
+            arch, frida_tag, project_tag), name="build-"+arch)
         thread.start()
         threads.append(thread)
-    
+
     for thread in threads:
         thread.join()
 

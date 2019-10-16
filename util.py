@@ -3,6 +3,7 @@ import requests
 import subprocess
 import string
 
+
 # 12.7.5-2, 12.7.5-3, ... -> 12.7.5
 def strip_revision(tag) -> str:
     return tag.split('-', 1)[0]
@@ -61,7 +62,8 @@ def get_commit_message() -> str:
 
 # executes a git command
 def exec_git_command(command_with_args: [str]) -> str:
-    result = subprocess.run(["git"] + command_with_args, capture_output=True).stdout
+    result = subprocess.run(["git"] + command_with_args,
+                            capture_output=True).stdout
     return result.decode()
 
 

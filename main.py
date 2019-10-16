@@ -1,7 +1,7 @@
 #!/user/bin/env python3
 #
 # MagiskFrida build process
-# 
+#
 # 1. Checks if project has a tag that matches frida tag
 #    Yes -> continue
 #    No  -> must tag
@@ -23,6 +23,7 @@ import subprocess
 from util import *
 import build
 
+
 def main():
     last_frida_tag = get_last_frida_tag()
     last_project_tag = get_last_project_tag()
@@ -30,7 +31,7 @@ def main():
     new_project_tag = "0"
 
     if last_frida_tag != strip_revision(last_project_tag) \
-        or (last_frida_tag != strip_revision(last_commit_tag) \
+        or (last_frida_tag != strip_revision(last_commit_tag)
             and get_commit_message().lower() == "release"):
 
         new_project_tag = get_next_revision(last_frida_tag)
