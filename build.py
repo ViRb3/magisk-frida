@@ -4,8 +4,9 @@ import lzma
 import os
 from pathlib import Path
 import shutil
-from threading import Thread
+import threading
 import zipfile
+import concurrent.futures
 
 import requests
 
@@ -75,6 +76,7 @@ def create_module(project_tag: str):
 
 
 def fill_module(arch: str, frida_tag: str, project_tag: str):
+    threading.current_thread().setName(arch)
     logger.info(f"Filling module for arch '{arch}'")
 
     frida_download_url = f"https://github.com/frida/frida/releases/download/{frida_tag}/"
@@ -110,15 +112,14 @@ def do_build(frida_tag: str, project_tag: str):
     create_module(project_tag)
 
     archs = ["arm", "arm64", "x86", "x86_64"]
-    threads = []
-    for arch in archs:
-        thread = Thread(target=lambda: fill_module(
-            arch, frida_tag, project_tag), name="build-"+arch)
-        thread.start()
-        threads.append(thread)
-
-    for thread in threads:
-        thread.join()
+    executor = concurrent.futures.ProcessPoolExecutor()
+    futures = [executor.submit(fill_module, arch, frida_tag, project_tag)
+               for arch in archs]
+    for future in concurrent.futures.as_completed(futures):
+        if future.exception() is not None:
+            raise future.exception()
+    # TODO: Causes 'OSError: The handle is invalid' in Python 3.7, revert after update
+    # executor.shutdown()
 
     package_module(project_tag)
 
