@@ -1,7 +1,6 @@
 import re
 import requests
 import subprocess
-import string
 
 
 # 12.7.5-2, 12.7.5-3, ... -> 12.7.5
