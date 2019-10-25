@@ -13,7 +13,7 @@
 - Install `MagiskFrida` from [Magisk Manager](https://github.com/topjohnwu/Magisk)
 
 ## How fast are frida-server updates?
-In less than 24 hours! They're automatic, too
+Instant! This module is hooked to the official Frida build process
 
 ## Why pre-releases?
 Due to incompatibility between the [release tool](https://github.com/release-it/release-it) and the versioning system

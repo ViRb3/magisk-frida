@@ -7,6 +7,6 @@
 - `arm64`, `arm`, `x86`, `x86_64`
 
 ## How fast are frida-server updates?
-In less than 24 hours! They're automatic, too
+Instant! This module is hooked to the official Frida build process
 
 ## For issues and more information, check out the [main project repo](https://github.com/ViRb3/magisk-frida)
