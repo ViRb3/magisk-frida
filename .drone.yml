@@ -14,9 +14,9 @@ steps:
 - name: build
   image: python:3.7.4-alpine3.10
   commands:
-  - apk add --no-cache git
-  - pip3 install poetry
-  - poetry config settings.virtualenvs.create false
+  - apk add --no-cache git build-base libffi-dev openssl-dev
+  - pip3 install poetry==1.0.0
+  - poetry config virtualenvs.create false
   - poetry install
   - python3 main.py
 
