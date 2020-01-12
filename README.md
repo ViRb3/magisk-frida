@@ -25,7 +25,7 @@ Check out the [troubleshooting guide](TROUBLESHOOTING.md)
 
 ```bash
 poetry install
-poetry run python build.py
+poetry run python main.py
 ```
 
 - Release ZIP will be under `/build`
