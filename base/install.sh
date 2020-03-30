@@ -144,10 +144,11 @@ on_install() {
   ui_print "- Extracting module files"
 
   F_TMPDIR="$TMPDIR/magisk-frida"
-  F_TARGETDIR="$MODPATH/system/xbin"
-  
+  F_TARGETDIR="$MODPATH/system/bin"
+  UNZIP="/data/adb/magisk/busybox unzip"
+
   mkdir "$F_TMPDIR"
-  unzip -o "$ZIPFILE" "files/*" -j -d "$F_TMPDIR" >&2
+  $UNZIP -qq -o "$ZIPFILE" "files/*" -j -d "$F_TMPDIR"
 
   mkdir -p "$F_TARGETDIR"
   mv "$F_TMPDIR/frida-server-$F_ARCH" "$F_TARGETDIR/frida-server"
@@ -164,7 +165,7 @@ set_permissions() {
   set_perm_recursive $MODPATH 0 0 0755 0644
 
   # Custom permissions
-  set_perm $MODPATH/system/xbin/frida-server 0 2000 0755 u:object_r:system_file:s0
+  set_perm $MODPATH/system/bin/frida-server 0 2000 0755 u:object_r:system_file:s0
 }
 
 # You can add more functions to assist your custom script code
