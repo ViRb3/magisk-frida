@@ -16,7 +16,7 @@ steps:
   commands:
   - DEBIAN_FRONTEND=noninteractive apt update
   - DEBIAN_FRONTEND=noninteractive apt install -yq git
-  - pip3 install poetry==1.0.0
+  - pip3 install poetry==1.0.5
   - poetry config virtualenvs.create false
   - poetry install
   - python3 main.py
