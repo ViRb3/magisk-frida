@@ -143,17 +143,14 @@ on_install() {
   ui_print "- Detected architecture: $F_ARCH"
   ui_print "- Extracting module files"
 
-  F_TMPDIR="$TMPDIR/magisk-frida"
   F_TARGETDIR="$MODPATH/system/bin"
   UNZIP="/data/adb/magisk/busybox unzip"
 
-  mkdir "$F_TMPDIR"
-  $UNZIP -qq -o "$ZIPFILE" "files/*" -j -d "$F_TMPDIR"
-
   mkdir -p "$F_TARGETDIR"
-  mv "$F_TMPDIR/frida-server-$F_ARCH" "$F_TARGETDIR/frida-server"
+  $UNZIP -qq -o "$ZIPFILE" "files/*" -j -d "$F_TARGETDIR"
 
-  rm -rf "$F_TMPDIR"
+  mv "$F_TARGETDIR/frida-server-$F_ARCH" "$F_TARGETDIR/frida-server"
+  find "$F_TARGETDIR" ! -name "frida-server" -type f -exec rm {} +
 }
 
 # Only some special files require specific permissions
