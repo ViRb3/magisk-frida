@@ -147,10 +147,9 @@ on_install() {
   UNZIP="/data/adb/magisk/busybox unzip"
 
   mkdir -p "$F_TARGETDIR"
-  $UNZIP -qq -o "$ZIPFILE" "files/*" -j -d "$F_TARGETDIR"
+  $UNZIP -qq -o "$ZIPFILE" "files/frida-server-$F_ARCH" -j -d "$F_TARGETDIR"
 
   mv "$F_TARGETDIR/frida-server-$F_ARCH" "$F_TARGETDIR/frida-server"
-  find "$F_TARGETDIR" ! -name "frida-server" -type f -exec rm {} +
 }
 
 # Only some special files require specific permissions
