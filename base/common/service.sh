@@ -7,8 +7,9 @@
 MODDIR=${0%/*}
 
 # This script will be executed in late_start service mode
-while true
-do
-  frida-server -D
-  sleep 1
+while [ "$(getprop sys.boot_completed)" != 1 ]; do
+    sleep 1;
 done
+
+frida-server -D
+
