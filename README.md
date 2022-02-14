@@ -7,10 +7,12 @@
 > [MagiskFrida](README.md) lets you run frida-server on boot with [Magisk](https://github.com/topjohnwu/Magisk)
 
 ## Supported architectures
-- `arm64`, `arm`, `x86`, `x86_64`
+`arm64`, `arm`, `x86`, `x86_64`
 
 ## Instructions
-- Install `MagiskFrida` from [Magisk Manager](https://github.com/topjohnwu/Magisk)
+Install `MagiskFrida.zip` from [the releases](https://github.com/ViRb3/magisk-frida/releases)
+
+> :information_source: Do not use the Magisk repository, it is obsolete and no longer receives updates
 
 ## How fast are frida-server updates?
 Instant! This module is hooked to the official Frida build process
