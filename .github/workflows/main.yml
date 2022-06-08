@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: ["master"]
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Build
+        run: |
+          pip3 install poetry==1.1.13
+          poetry config virtualenvs.create false
+          poetry install
+          python3 main.py
+          echo "NEW_TAG=$(cat NEW_TAG.txt)" >> $GITHUB_ENV
+
+      - name: Release
+        if: hashFiles('NEW_TAG.txt') != ''
+        uses: ncipollo/release-action@v1.10.0
+        with:
+          artifacts: build/*.zip
+          tag: "${{ env.NEW_TAG }}"
+          body: https://github.com/frida/frida/releases
