@@ -1,7 +1,8 @@
 # MagiskFrida
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ViRb3/magisk-frida/CI)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/ViRb3/magisk-frida/main.yml?branch=master)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ViRb3/magisk-frida)
+![GitHub downloads](https://img.shields.io/github/downloads/ViRb3/magisk-frida/total)
 
 > [Frida](https://frida.re) is a dynamic instrumentation toolkit for developers, reverse-engineers, and security researchers
 
