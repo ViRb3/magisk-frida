@@ -21,12 +21,29 @@ jobs:
           poetry config virtualenvs.create false
           poetry install
           python3 main.py
-          echo "NEW_TAG=$(cat NEW_TAG.txt)" >> $GITHUB_ENV
-
+          
       - name: Release
-        if: hashFiles('NEW_TAG.txt') != ''
-        uses: ncipollo/release-action@v1.10.0
+        if: env.NEW_TAG != ''
+        uses: ncipollo/release-action@v1.12.0
         with:
           artifacts: build/*.zip
           tag: "${{ env.NEW_TAG }}"
-          body: https://github.com/frida/frida/releases
+          body: "https://github.com/frida/frida/releases"
+      
+      - name: Write update.json
+        if: env.NEW_TAG != ''
+        run: |+
+          echo '{
+               "version": "${{ env.NEW_TAG }}",
+                "versionCode": ${{ env.VERSION_CODE }},
+                "zipUrl": "https://github.com/${{ env.THIS_REPOSITORY }}/releases/download/${{ env.NEW_TAG }}/MagiskFrida-${{ env.NEW_TAG }}.zip",
+                "changelog": "https://github.com/frida/frida/releases"
+          }' > update.json
+          
+      - name: Commit update.json
+        if: env.NEW_TAG != ''
+        uses: test-room-7/action-update-file@v1.6.0
+        with:
+          file-path: update.json
+          commit-msg: Commit update.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
