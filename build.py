@@ -52,10 +52,15 @@ def extract_file(archive_path: Path, dest_path: Path):
 
 
 def create_module_prop(path: Path, project_tag: str):
+    # If we are building the script via a GitHub action
+    update_json_link = f"https://raw.githubusercontent.com/{os.getenv('GITHUB_REPOSITORY')}/master/update.json"\
+        if os.getenv('GITHUB_REPOSITORY') else ""
+    
     module_prop = f"""id=magisk-frida
 name=MagiskFrida
 version={project_tag}
 versionCode={project_tag.replace(".", "").replace("-", "")}
+updateJson={update_json_link}
 author=ViRb3
 description=Run frida-server on boot"""
 
