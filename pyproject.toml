@@ -6,7 +6,7 @@ authors = [""]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-requests = "^2.22"
+requests = "^2.31"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.4"
