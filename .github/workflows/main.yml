@@ -15,9 +15,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11' 
+  
       - name: Build
         run: |
-          pip3 install poetry==1.1.13
+          pip3 install poetry==1.5.1
           poetry config virtualenvs.create false
           poetry install
           python3 main.py
