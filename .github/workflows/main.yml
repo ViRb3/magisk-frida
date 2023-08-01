@@ -31,6 +31,6 @@ jobs:
         if: hashFiles('NEW_TAG.txt') != ''
         uses: ncipollo/release-action@v1.10.0
         with:
-          artifacts: build/*.zip
+          artifacts: build/*.zip,build/updater.json
           tag: "${{ env.NEW_TAG }}"
           body: https://github.com/frida/frida/releases
