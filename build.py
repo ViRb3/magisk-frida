@@ -59,7 +59,7 @@ version={project_tag}
 versionCode={project_tag.replace(".", "").replace("-", "")}
 author=ViRb3
 description=Run frida-server on boot
-updateJson=https://github.com/ViRb3/magisk-frida/releases/latest/updater.json"""
+updateJson=https://github.com/ViRb3/magisk-frida/releases/latest/download/updater.json"""
 
     with open(path.joinpath("module.prop"), "w", newline="\n") as f:
         f.write(module_prop)
