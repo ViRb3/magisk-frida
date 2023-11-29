@@ -95,7 +95,8 @@ def create_updater_json(project_tag: str):
     updater ={
         "version": project_tag,
         "versionCode": int(project_tag.replace(".", "").replace("-", "")),
-        "zipUrl": f"https://github.com/ViRb3/magisk-frida/releases/download/{project_tag}/MagiskFrida-{project_tag}.zip"
+        "zipUrl": f"https://github.com/ViRb3/magisk-frida/releases/download/{project_tag}/MagiskFrida-{project_tag}.zip",
+        "changelog": ""
     }
 
     with open(PATH_BUILD.joinpath("updater.json"), "w", newline="\n") as f:
