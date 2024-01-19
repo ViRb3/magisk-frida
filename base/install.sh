@@ -144,7 +144,20 @@ on_install() {
   ui_print "- Extracting module files"
 
   F_TARGETDIR="$MODPATH/system/bin"
-  UNZIP="/data/adb/magisk/busybox unzip"
+  # Check if the KSU environment variable is set
+  if [ "$KSU" = "true" ]; then
+    # Running in KernelSU
+    ui_print "- Running in KernelSU env."
+    UNZIP="/data/adb/ksu/bin/busybox unzip"
+    # Add your KernelSU-specific actions here
+  else
+    # Running in Magisk
+    ui_print "- Running in Magisk env."
+    UNZIP="/data/adb/magisk/busybox unzip"
+    # Add your Magisk-specific actions here
+  fi
+
+  # UNZIP="/data/adb/magisk/busybox unzip"
 
   mkdir -p "$F_TARGETDIR"
   $UNZIP -qq -o "$ZIPFILE" "files/frida-server-$F_ARCH" -j -d "$F_TARGETDIR"
