@@ -124,7 +124,7 @@ REPLACE="
 print_modname() {
   ui_print " "
   ui_print "    ********************************************"
-  ui_print "    *               MagiskFrida                *"
+  ui_print "    *          Magisk-/KernelSU-Frida          *"
   ui_print "    ********************************************"
   ui_print " "
 }
@@ -141,14 +141,30 @@ on_install() {
   esac
 
   ui_print "- Detected architecture: $F_ARCH"
+
+  ui_print "- Finding Magisk or KernelSU"
+  if [ "$BOOTMODE" ] && [ "$KSU" ]; then
+      ui_print "- Installing from KernelSU app"
+      ui_print "- KernelSU version: $KSU_KERNEL_VER_CODE (kernel) + $KSU_VER_CODE (ksud)"
+      UNZIP="/data/adb/ksu/bin/busybox unzip"
+  elif [ "$BOOTMODE" ] && [ "$MAGISK_VER_CODE" ]; then
+      ui_print "- Installing from Magisk app"
+      ui_print "- Magisk version: $MAGISK_VER_CODE"
+      UNZIP="/data/adb/magisk/busybox unzip"
+  else
+    ui_print "*********************************************************"
+    ui_print "! Install from recovery is not supported"
+    ui_print "! Please install from KernelSU or Magisk app"
+    abort    "*********************************************************"
+fi
+
   ui_print "- Extracting module files"
-
   F_TARGETDIR="$MODPATH/system/bin"
-  UNZIP="/data/adb/magisk/busybox unzip"
-
   mkdir -p "$F_TARGETDIR"
-  $UNZIP -qq -o "$ZIPFILE" "files/frida-server-$F_ARCH" -j -d "$F_TARGETDIR"
+  chcon -R u:object_r:system_file:s0 "$MODPATH/system/bin"
+  chmod -R 755 "$MODPATH/system/bin"
 
+  $UNZIP -qq -o "$ZIPFILE" "files/frida-server-$F_ARCH" -j -d "$F_TARGETDIR"
   mv "$F_TARGETDIR/frida-server-$F_ARCH" "$F_TARGETDIR/frida-server"
 }
 
