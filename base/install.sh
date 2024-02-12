@@ -142,7 +142,6 @@ on_install() {
 
   ui_print "- Detected architecture: $F_ARCH"
 
-  ui_print "- Finding Magisk or KernelSU"
   if [ "$BOOTMODE" ] && [ "$KSU" ]; then
       ui_print "- Installing from KernelSU app"
       ui_print "- KernelSU version: $KSU_KERNEL_VER_CODE (kernel) + $KSU_VER_CODE (ksud)"
@@ -161,8 +160,8 @@ fi
   ui_print "- Extracting module files"
   F_TARGETDIR="$MODPATH/system/bin"
   mkdir -p "$F_TARGETDIR"
-  chcon -R u:object_r:system_file:s0 "$MODPATH/system/bin"
-  chmod -R 755 "$MODPATH/system/bin"
+  chcon -R u:object_r:system_file:s0 "$F_TARGETDIR"
+  chmod -R 755 "$F_TARGETDIR"
 
   $UNZIP -qq -o "$ZIPFILE" "files/frida-server-$F_ARCH" -j -d "$F_TARGETDIR"
   mv "$F_TARGETDIR/frida-server-$F_ARCH" "$F_TARGETDIR/frida-server"
