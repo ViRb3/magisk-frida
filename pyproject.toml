@@ -5,8 +5,8 @@ description = "Run frida-server on boot with Magisk"
 authors = [""]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-requests = "^2.22"
+python = "^3.8"
+requests = "^2.32"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.4"
