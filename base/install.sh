@@ -144,7 +144,23 @@ on_install() {
   ui_print "- Extracting module files"
 
   F_TARGETDIR="$MODPATH/system/bin"
-  UNZIP="/data/adb/magisk/busybox unzip"
+  MAGISK_BIN="/data/adb/magisk/busybox"
+  KERNELSU_BIN="/data/adb/ksu/bin/busybox"
+  APATCH_BIN="/data/adb/ap/bin/busybox"
+
+  if [ -f "$MAGISK_BIN" ]; then
+    echo "- ${MAGISK_BIN} found"
+    UNZIP="${MAGISK_BIN} unzip"
+  elif [ -f "$KERNELSU_BIN" ]; then
+    echo "- ${KERNELSU_BIN} found"
+    UNZIP="${KERNELSU_BIN} unzip"
+  elif [ -f "$APATCH_BIN" ]; then
+    echo "- ${APATCH_BIN} found"
+    UNZIP="${APATCH_BIN} unzip"
+  else
+    echo "- No busybox found,Use system unzip"
+    UNZIP="/system/bin/unzip"
+  fi
 
   mkdir -p "$F_TARGETDIR"
   $UNZIP -qq -o "$ZIPFILE" "files/frida-server-$F_ARCH" -j -d "$F_TARGETDIR"
