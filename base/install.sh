@@ -146,6 +146,10 @@ on_install() {
       ui_print "- Installing from KernelSU app"
       ui_print "- KernelSU version: $KSU_KERNEL_VER_CODE (kernel) + $KSU_VER_CODE (ksud)"
       UNZIP="/data/adb/ksu/bin/busybox unzip"
+  elif [ "$BOOTMODE" ] && [ "$APATCH" ]; then
+      ui_print "- Installing from APatch app"
+      ui_print "- APatch version: $APATCH_VER_CODE. Magisk version: $MAGISK_VER_CODE"
+      UNZIP="/data/adb/ap/bin/busybox unzip"
   elif [ "$BOOTMODE" ] && [ "$MAGISK_VER_CODE" ]; then
       ui_print "- Installing from Magisk app"
       ui_print "- Magisk version: $MAGISK_VER_CODE"
