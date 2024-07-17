@@ -57,7 +57,7 @@ def create_module_prop(path: Path, project_tag: str):
 name=MagiskFrida
 version={project_tag}
 versionCode={project_tag.replace(".", "").replace("-", "")}
-author=ViRb3
+author=ViRb3 & enovella
 description=Run frida-server on boot
 updateJson=https://github.com/ViRb3/magisk-frida/releases/latest/download/updater.json"""
 
