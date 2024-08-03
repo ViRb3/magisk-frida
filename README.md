@@ -6,7 +6,8 @@
 
 > [Frida](https://frida.re) is a dynamic instrumentation toolkit for developers, reverse-engineers, and security researchers
 
-> [MagiskFrida](README.md) lets you run frida-server on boot with [Magisk](https://github.com/topjohnwu/Magisk)
+> [MagiskFrida](README.md) lets you run frida-server on boot with the following rooting tools:
+[Magisk](https://github.com/topjohnwu/Magisk), [KernelSU](https://github.com/tiann/KernelSU) and [APatch](https://github.com/bmax121/APatch).
 
 ## Supported architectures
 
@@ -16,11 +17,11 @@
 
 Install `MagiskFrida.zip` from [the releases](https://github.com/ViRb3/magisk-frida/releases)
 
-> :information_source: Do not use the Magisk repository, it is obsolete and no longer receives updates
+> :information_source: Do not use the Magisk modules repository, it is obsolete and no longer receives updates
 
 ## How fast are frida-server updates?
 
-Instant! This module is hooked to the official Frida build process
+Instant! This module is hooked up to the official Frida build process
 
 ## Issues?
 
