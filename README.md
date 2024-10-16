@@ -6,8 +6,11 @@
 
 > [Frida](https://frida.re) is a dynamic instrumentation toolkit for developers, reverse-engineers, and security researchers
 
-> [MagiskFrida](README.md) lets you run frida-server on boot with the following rooting tools:
-[Magisk](https://github.com/topjohnwu/Magisk), [KernelSU](https://github.com/tiann/KernelSU) and [APatch](https://github.com/bmax121/APatch).
+> [MagiskFrida](README.md) lets you run frida-server on boot with multiple root solutions
+
+## Supported root solutions
+
+[Magisk](https://github.com/topjohnwu/Magisk), [KernelSU](https://github.com/tiann/KernelSU) and [APatch](https://github.com/bmax121/APatch)
 
 ## Supported architectures
 
