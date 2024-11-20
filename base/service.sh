@@ -17,4 +17,7 @@ done
 sleep 5
 
 # restart on crash
-frida-server -D
+while true; do
+    frida-server
+    sleep 5
+done

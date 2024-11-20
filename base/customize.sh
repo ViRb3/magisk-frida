@@ -3,6 +3,8 @@
 # Magisk Module Installer Script
 #
 ##########################################################################################
+# if 1 skip all default installation steps
+SKIPUNZIP=0
 ##########################################################################################
 #
 # Instructions:
@@ -10,29 +12,10 @@
 # 1. Place your files into system folder (delete the placeholder file)
 # 2. Fill in your module's info into module.prop
 # 3. Configure and implement callbacks in this file
-# 4. If you need boot scripts, add them into common/post-fs-data.sh or common/service.sh
-# 5. Add your additional or modified system properties into common/system.prop
+# 4. If you need boot scripts, add them into post-fs-data.sh or service.sh
+# 5. Add your additional or modified system properties into system.prop
 #
 ##########################################################################################
-
-##########################################################################################
-# Config Flags
-##########################################################################################
-
-# Set to true if you do *NOT* want Magisk to mount
-# any files for you. Most modules would NOT want
-# to set this flag to true
-SKIPMOUNT=false
-
-# Set to true if you need to load system.prop
-PROPFILE=false
-
-# Set to true if you need post-fs-data script
-POSTFSDATA=false
-
-# Set to true if you need late_start service script
-LATESTARTSERVICE=true
-
 ##########################################################################################
 # Replace list
 ##########################################################################################
@@ -145,15 +128,12 @@ on_install() {
   if [ "$BOOTMODE" ] && [ "$KSU" ]; then
       ui_print "- Installing from KernelSU app"
       ui_print "- KernelSU version: $KSU_KERNEL_VER_CODE (kernel) + $KSU_VER_CODE (ksud)"
-      UNZIP="/data/adb/ksu/bin/busybox unzip"
   elif [ "$BOOTMODE" ] && [ "$APATCH" ]; then
       ui_print "- Installing from APatch app"
       ui_print "- APatch version: $APATCH_VER_CODE. Magisk version: $MAGISK_VER_CODE"
-      UNZIP="/data/adb/ap/bin/busybox unzip"
   elif [ "$BOOTMODE" ] && [ "$MAGISK_VER_CODE" ]; then
       ui_print "- Installing from Magisk app"
       ui_print "- Magisk version: $MAGISK_VER_CODE"
-      UNZIP="/data/adb/magisk/busybox unzip"
   else
     ui_print "*********************************************************"
     ui_print "! Install from recovery is not supported"
@@ -167,20 +147,12 @@ fi
   chcon -R u:object_r:system_file:s0 "$F_TARGETDIR"
   chmod -R 755 "$F_TARGETDIR"
 
-  $UNZIP -qq -o "$ZIPFILE" "files/frida-server-$F_ARCH" -j -d "$F_TARGETDIR"
-  mv "$F_TARGETDIR/frida-server-$F_ARCH" "$F_TARGETDIR/frida-server"
+  mv "$MODPATH/files/frida-server-$F_ARCH" "$F_TARGETDIR/frida-server"
+  rm -r "$MODPATH/files"
+  
 }
 
 # Only some special files require specific permissions
 # This function will be called after on_install is done
 # The default permissions should be good enough for most cases
-
-set_permissions() {
-  # The following is the default rule, DO NOT remove
-  set_perm_recursive $MODPATH 0 0 0755 0644
-
-  # Custom permissions
-  set_perm $MODPATH/system/bin/frida-server 0 2000 0755 u:object_r:system_file:s0
-}
-
 # You can add more functions to assist your custom script code
