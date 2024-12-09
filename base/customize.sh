@@ -126,6 +126,8 @@ REPLACE="
 exec 2> $MODPATH/logs/custom.log
 set -x
 
+PATH=$PATH:/data/adb/ap/bin:/data/adb/magisk:/data/adb/ksu/bin
+
 # keep Magisk's forced module installer backend involvement minimal (must end without ";")
 # SKIPUNZIP=1
 
@@ -155,15 +157,12 @@ on_install() {
   if [ "$BOOTMODE" ] && [ "$KSU" ]; then
       ui_print "- Installing from KernelSU"
       ui_print "- KernelSU version: $KSU_KERNEL_VER_CODE (kernel) + $KSU_VER_CODE (ksud)"
-      UNZIP="/data/adb/ksu/bin/busybox unzip"
   elif [ "$BOOTMODE" ] && [ "$APATCH" ]; then
       ui_print "- Installing from APatch"
       ui_print "- APatch version: $APATCH_VER_CODE. Magisk version: $MAGISK_VER_CODE"
-      UNZIP="/data/adb/ap/bin/busybox unzip"
   elif [ "$BOOTMODE" ] && [ "$MAGISK_VER_CODE" ]; then
       ui_print "- Installing from Magisk"
       ui_print "- Magisk version: $MAGISK_VER_CODE ($MAGISK_VER)"
-      UNZIP="/data/adb/magisk/busybox unzip"
   else
     ui_print "*********************************************************"
     ui_print "! Install from recovery is not supported"
@@ -177,10 +176,8 @@ fi
   chcon -R u:object_r:system_file:s0 "$F_TARGETDIR"
   chmod -R 755 "$F_TARGETDIR"
 
-  $UNZIP -qq -o "$ZIPFILE" "files/frida-server-$F_ARCH" -j -d "$F_TARGETDIR"
+  busybox unzip -qq -o "$ZIPFILE" "files/frida-server-$F_ARCH" -j -d "$F_TARGETDIR"
   mv "$F_TARGETDIR/frida-server-$F_ARCH" "$F_TARGETDIR/frida-server"
-
-  [ ! -d $MODPATH/logs ] && mkdir -p $MODPATH/logs
 }
 
 # Only some special files require specific permissions
