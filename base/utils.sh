@@ -7,7 +7,7 @@ exec 2> $MODPATH/logs/utils.log
 set -x
 
 function check_frida_is_up() {
-    [ ! -z "$1" ] && timeout="$1" || timeout=5
+    [ ! -z "$1" ] && timeout="$1" || timeout=4
     counter=0
 
     while [ $counter -lt $timeout ]; do
@@ -15,13 +15,12 @@ function check_frida_is_up() {
         if [ $result -gt 0 ]; then
             echo "[-] Frida-server is running... 💉😜"
             string="description=Run frida-server on boot: ✅ (active)"
-            sleep 1.5
             break
         else
-            sleep 1
             echo "[-] Checking Frida-server status: $counter"
             counter=$((counter + 1))
         fi
+        sleep 1.5
     done
 
     if [ $counter -ge $timeout ]; then
