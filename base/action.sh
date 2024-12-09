@@ -9,7 +9,7 @@ set -x
 . $MODPATH/utils.sh
 
 [ -f $MODPATH/disable ] && {
-    echo "[-] Frida-server is already disable. Please re-enable & reboot"
+    echo "[-] Frida-server is disable"
     string="description=Run frida-server on boot: ❌ (failed)"
     sed -i "s/^description=.*/$string/g" $MODPATH/module.prop
     sleep 1
@@ -25,8 +25,8 @@ else
     frida-server -D
 fi
 
-sleep 2
+sleep 1
 
-check_frida_is_up
+check_frida_is_up 1
 
 #EOF
