@@ -7,7 +7,7 @@ exec 2> $MODPATH/logs/utils.log
 set -x
 
 function check_frida_is_up() {
-    timeout=5
+    timeout=4
     counter=0
 
     while [ $counter -lt $timeout ]; do

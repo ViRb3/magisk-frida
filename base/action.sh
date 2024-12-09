@@ -18,14 +18,14 @@ set -x
 
 result="$(busybox pgrep 'frida-server')"
 if [ $result -gt 0 ]; then
-    echo "[-] Killing frida-server..."
+    echo "[-] Stopping Frida-server..."
     busybox kill -9 $result
 else
-    echo "[-] Frida server relaunching..."
+    echo "[-] Starting Frida server..."
     frida-server -D
 fi
 
-sleep 1
+sleep 2
 
 check_frida_is_up
 
