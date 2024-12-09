@@ -13,7 +13,7 @@ function check_frida_is_up() {
     while [ $counter -lt $timeout ]; do
         local result="$(busybox pgrep 'frida-server')"
         if [ $result -gt 0 ]; then
-            echo "[-] Frida-server is running... 😜"
+            echo "[-] Frida-server is running... 💉😜"
             string="description=Run frida-server on boot: ✅ (active)"
             break
         else
