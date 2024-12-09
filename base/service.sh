@@ -14,4 +14,4 @@ frida-server -D
 
 check_frida_is_up
 
-
+#EOF
