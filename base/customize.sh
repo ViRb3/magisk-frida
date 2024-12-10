@@ -1,3 +1,4 @@
+#!/bin/sh
 ##########################################################################################
 #
 # Magisk Module Installer Script
@@ -119,12 +120,23 @@ REPLACE="
 # Enable boot scripts by setting the flags in the config section above.
 ##########################################################################################
 
-# Set what you want to display when installing your module
+[ ! -d $MODPATH/logs ] && mkdir -p $MODPATH/logs
 
+# log
+exec 2> $MODPATH/logs/custom.log
+set -x
+
+PATH=$PATH:/data/adb/ap/bin:/data/adb/magisk:/data/adb/ksu/bin
+
+# keep Magisk's forced module installer backend involvement minimal (must end without ";")
+# SKIPUNZIP=1
+
+# Set what you want to display when installing your module
 print_modname() {
   ui_print " "
   ui_print "    ********************************************"
-  ui_print "    *          Magisk-/KernelSU-Frida          *"
+  ui_print "    *          Magisk/KernelSU/APatch          *"
+  ui_print "    *                  Frida                   *"
   ui_print "    ********************************************"
   ui_print " "
 }
@@ -143,17 +155,14 @@ on_install() {
   ui_print "- Detected architecture: $F_ARCH"
 
   if [ "$BOOTMODE" ] && [ "$KSU" ]; then
-      ui_print "- Installing from KernelSU app"
+      ui_print "- Installing from KernelSU"
       ui_print "- KernelSU version: $KSU_KERNEL_VER_CODE (kernel) + $KSU_VER_CODE (ksud)"
-      UNZIP="/data/adb/ksu/bin/busybox unzip"
   elif [ "$BOOTMODE" ] && [ "$APATCH" ]; then
-      ui_print "- Installing from APatch app"
+      ui_print "- Installing from APatch"
       ui_print "- APatch version: $APATCH_VER_CODE. Magisk version: $MAGISK_VER_CODE"
-      UNZIP="/data/adb/ap/bin/busybox unzip"
   elif [ "$BOOTMODE" ] && [ "$MAGISK_VER_CODE" ]; then
-      ui_print "- Installing from Magisk app"
-      ui_print "- Magisk version: $MAGISK_VER_CODE"
-      UNZIP="/data/adb/magisk/busybox unzip"
+      ui_print "- Installing from Magisk"
+      ui_print "- Magisk version: $MAGISK_VER_CODE ($MAGISK_VER)"
   else
     ui_print "*********************************************************"
     ui_print "! Install from recovery is not supported"
@@ -161,13 +170,13 @@ on_install() {
     abort    "*********************************************************"
 fi
 
-  ui_print "- Extracting module files"
+  ui_print "- Unzipping module files..."
   F_TARGETDIR="$MODPATH/system/bin"
   mkdir -p "$F_TARGETDIR"
   chcon -R u:object_r:system_file:s0 "$F_TARGETDIR"
   chmod -R 755 "$F_TARGETDIR"
 
-  $UNZIP -qq -o "$ZIPFILE" "files/frida-server-$F_ARCH" -j -d "$F_TARGETDIR"
+  busybox unzip -qq -o "$ZIPFILE" "files/frida-server-$F_ARCH" -j -d "$F_TARGETDIR"
   mv "$F_TARGETDIR/frida-server-$F_ARCH" "$F_TARGETDIR/frida-server"
 }
 
@@ -183,4 +192,13 @@ set_permissions() {
   set_perm $MODPATH/system/bin/frida-server 0 2000 0755 u:object_r:system_file:s0
 }
 
-# You can add more functions to assist your custom script code
+print_modname
+on_install
+set_permissions
+
+[ -f $MODPATH/disable ] && {
+  string="description=Run frida-server on boot: ❌ (failed)"
+  sed -i "s/^description=.*/$string/g" $MODPATH/module.prop
+}
+
+#EOF
