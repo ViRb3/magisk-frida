@@ -33,8 +33,8 @@ Check out the [troubleshooting guide](TROUBLESHOOTING.md)
 ## Building yourself
 
 ```bash
-poetry install
-poetry run python main.py
+uv sync
+uv run python3 main.py
 ```
 
 - Release ZIP will be under `/build`
