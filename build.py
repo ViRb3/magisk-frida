@@ -8,6 +8,7 @@ import threading
 import zipfile
 import concurrent.futures
 import json
+import re
 
 import requests
 
@@ -52,11 +53,17 @@ def extract_file(archive_path: Path, dest_path: Path):
             out.write(file_content)
 
 
+def generate_version_code(project_tag: str) -> int:
+    parts = re.split("[-.]", project_tag)
+    version_code = "".join(f"{int(part):02d}" for part in parts)
+    return int(version_code)
+
+
 def create_module_prop(path: Path, project_tag: str):
     module_prop = f"""id=magisk-frida
 name=MagiskFrida
 version={project_tag}
-versionCode={project_tag.replace(".", "").replace("-", "")}
+versionCode={generate_version_code(project_tag)}
 author=ViRb3 & enovella
 updateJson=https://github.com/ViRb3/magisk-frida/releases/latest/download/updater.json
 description=Run frida-server on boot"""
@@ -96,7 +103,7 @@ def create_updater_json(project_tag: str):
 
     updater = {
         "version": project_tag,
-        "versionCode": int(project_tag.replace(".", "").replace("-", "")),
+        "versionCode": generate_version_code(project_tag),
         "zipUrl": f"https://github.com/ViRb3/magisk-frida/releases/download/{project_tag}/MagiskFrida-{project_tag}.zip",
         "changelog": "https://raw.githubusercontent.com/ViRb3/magisk-frida/master/CHANGELOG.md",
     }
