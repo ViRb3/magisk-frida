@@ -4,6 +4,12 @@ on:
   push:
     branches: ["master"]
   workflow_dispatch:
+    inputs:
+      force_release:
+        description: 'Force release even if no Frida update is available'
+        required: false
+        default: false
+        type: boolean
   repository_dispatch:
 
 jobs:
@@ -26,6 +32,8 @@ jobs:
         run: |
           uv run python3 main.py
           echo "NEW_TAG=$(cat NEW_TAG.txt)" >> $GITHUB_ENV
+        env:
+          FORCE_RELEASE: ${{ github.event.inputs.force_release }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

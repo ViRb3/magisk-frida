@@ -31,13 +31,6 @@ def get_last_project_tag() -> str:
     return last_tag
 
 
-# gets last tag of current commit
-def get_last_commit_tag() -> str:
-    last_tag = get_last_tag(["--points-at", "HEAD"])
-    print(f"Last commit tag: {last_tag}")
-    return last_tag
-
-
 # properly sort tags (e.g. 1.11 > 1.9)
 def sort_tags(tags: [str]) -> [str]:
     tags = tags.copy()
@@ -51,12 +44,6 @@ def get_last_tag(filter_args: [str]) -> str:
     tags = exec_git_command(["tag", "-l"] + filter_args).splitlines()
     last_tag = "" if len(tags) < 1 else sort_tags(tags)[-1]
     return last_tag
-
-
-# gets commit message
-def get_commit_message() -> str:
-    message = exec_git_command(["log", "--format=%B", "-n", "1", "HEAD"])
-    return message.strip()
 
 
 # executes a git command
