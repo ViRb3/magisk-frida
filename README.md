@@ -22,6 +22,14 @@ Install `MagiskFrida.zip` from [the releases](https://github.com/ViRb3/magisk-fr
 
 > :information_source: Do not use the Magisk modules repository, it is obsolete and no longer receives updates
 
+## Custom port
+
+frida-server listens on `127.0.0.1:27042` by default. To change it, write the port to `/data/adb/modules/magisk-frida/port` and reboot
+
+```bash
+echo 41337 > /data/adb/modules/magisk-frida/port
+```
+
 ## How fast are frida-server updates?
 
 Instant! This module is hooked up to the official Frida build process

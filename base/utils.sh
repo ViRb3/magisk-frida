@@ -1,6 +1,7 @@
 #!/bin/sh
 MODPATH=${0%/*}
 FRIDA_BIN="$MODPATH/bin/frida-server"
+FRIDA_PORT_FILE="$MODPATH/port"
 PATH="$MODPATH/bin:$PATH:/data/adb/ap/bin:/data/adb/magisk:/data/adb/ksu/bin"
 
 # log
@@ -43,7 +44,18 @@ start_frida_server() {
     return 1
   fi
 
-  "$FRIDA_BIN" -D
+  FRIDA_LISTEN=""
+  if [ -f "$FRIDA_PORT_FILE" ]; then
+    FRIDA_PORT="$(tr -d ' \t\r\n' < "$FRIDA_PORT_FILE")"
+    case "$FRIDA_PORT" in
+      '' | *[!0-9]*) echo "[-] Ignoring invalid port: $FRIDA_PORT" ;;
+      *) [ "$FRIDA_PORT" -ge 1 ] && [ "$FRIDA_PORT" -le 65535 ] \
+           && FRIDA_LISTEN="127.0.0.1:$FRIDA_PORT" \
+           || echo "[-] Ignoring out-of-range port: $FRIDA_PORT" ;;
+    esac
+  fi
+
+  "$FRIDA_BIN" ${FRIDA_LISTEN:+-l "$FRIDA_LISTEN"} -D
 }
 
 wait_for_boot() {
