@@ -46,7 +46,7 @@ start_frida_server() {
 
   FRIDA_LISTEN=""
   if [ -f "$FRIDA_PORT_FILE" ]; then
-    FRIDA_PORT="$(cat "$FRIDA_PORT_FILE")"
+    FRIDA_PORT="$(tr -d ' \t\r\n' < "$FRIDA_PORT_FILE")"
     case "$FRIDA_PORT" in
       '' | *[!0-9]*) echo "[-] Ignoring invalid port: $FRIDA_PORT" ;;
       *) [ "$FRIDA_PORT" -ge 1 ] && [ "$FRIDA_PORT" -le 65535 ] \
